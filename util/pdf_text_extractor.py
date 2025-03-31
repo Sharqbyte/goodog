@@ -14,7 +14,7 @@ class PDFTextExtractor:
     def set_tesseract_config(self, config):
         self.tesseract_config = config
 
-    def preprocess_image(self, image):
+    def preprocess_image_old(self, image):
         # Convert to grayscale if not already
         if len(image.shape) == 3:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -31,6 +31,94 @@ class PDFTextExtractor:
         # Remove noise
         denoised = cv2.fastNlMeansDenoising(thresh, None, 30, 7, 21)
         return denoised
+
+    def preprocess_image_improved(self, image):
+        # Graustufen-Konvertierung mit Kanalgewichtung
+        if len(image.shape) == 3:
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # Alternativ: Experiment mit Farbkanälen
+            # gray = image[:,:,2]  # Oft besserer Kontrast im Rotkanal
+        else:
+            gray = image
+
+        # Skalierung mit bilinearer Interpolation
+        gray = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
+
+        # Adaptives Thresholding
+        thresh = cv2.adaptiveThreshold(
+            gray, 255,
+            cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+            cv2.THRESH_BINARY, 11, 2
+        )
+
+        # Morphologische Operationen
+        kernel = np.ones((1,1), np.uint8)
+        processed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
+        # Kontrastoptimierung mit CLAHE
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+        processed = clahe.apply(processed)
+
+        # Gezieltes Denoising
+        processed = cv2.fastNlMeansDenoising(
+            processed,
+            h=20,  # Reduzierte Stärke
+            templateWindowSize=7,
+            searchWindowSize=21
+        )
+
+        return processed
+
+    def preprocess_image(self, image):
+        # Graustufen-Konvertierung mit Kanalgewichtung
+        if len(image.shape) == 3:
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # Alternativ: Experiment mit Farbkanälen
+            # gray = image[:,:,2]  # Oft besserer Kontrast im Rotkanal
+        else:
+            gray = image
+        # Apply thresholding
+        _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
+        # Remove noise
+        denoised = cv2.fastNlMeansDenoising(thresh, h=30)
+        return denoised
+
+    def preprocess_image_improved(self, image):
+        # Graustufen-Konvertierung mit Kanalgewichtung
+        if len(image.shape) == 3:
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # Alternativ: Experiment mit Farbkanälen
+            # gray = image[:,:,2]  # Oft besserer Kontrast im Rotkanal
+        else:
+            gray = image
+
+        # Skalierung mit bilinearer Interpolation
+        gray = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
+
+        # Adaptives Thresholding
+        thresh = cv2.adaptiveThreshold(
+            gray, 255,
+            cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+            cv2.THRESH_BINARY, 11, 2
+        )
+
+        # Morphologische Operationen
+        kernel = np.ones((1,1), np.uint8)
+        processed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
+        # Kontrastoptimierung mit CLAHE
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+        processed = clahe.apply(processed)
+
+        # Gezieltes Denoising
+        processed = cv2.fastNlMeansDenoising(
+            processed,
+            h=20,  # Reduzierte Stärke
+            templateWindowSize=7,
+            searchWindowSize=21
+        )
+
+        return processed
 
     def extract_text_from_image(self, image):
         # Convert PIL image to OpenCV format

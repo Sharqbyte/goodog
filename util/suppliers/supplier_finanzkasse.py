@@ -12,8 +12,19 @@ from util.str_util import Utils
 
 class SupplierFinanzkasse(DefaultExtractor):
     def __init__(self, config, tessoract_config):
-        super().__init__(config)
+        super().__init__(config, tessoract_config)
         self.pdf_text_extractor.set_tesseract_config(tessoract_config)
+
+    def parse_pdf(self, config, pdf_path):
+        self.config = config
+        self.pdf_path = pdf_path
+        self.text = self.pdf_text_extractor.extract_text_from_pdf(pdf_path)
+        # Extract data from text
+        data_extract = self.extract_data()
+        self.config = config
+        logging.debug(f"Start data extraction for Finanzamt Ebersberg document")
+        print(f"Start data extraction for Finanzamt Ebersberg document")
+        return data_extract
 
     def is_invoice(self):
         if re.search(r"Rechnung|Invoice|Billing", self.text, re.IGNORECASE):
@@ -148,14 +159,3 @@ class SupplierFinanzkasse(DefaultExtractor):
 
         logging.info(f"Extracted data: reference={reference}, date={date}, invoice_number={invoice_number}, supplier={supplier}, recipient={recipient}")
         return invoice, reference, date, invoice_number, supplier, recipient
-
-    def parse_pdf(self, config, pdf_path):
-        self.config = config
-        self.pdf_path = pdf_path
-        self.text = self.extract_text_from_image(self.pdf_path)
-        # Extract data from text
-        data_extract = self.extract_data()
-        self.config = config
-        logging.debug(f"Start data extraction for Finanzamt Ebersberg document")
-        print(f"Start data extraction for Finanzamt Ebersberg document")
-        return data_extract

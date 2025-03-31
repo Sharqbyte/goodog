@@ -128,7 +128,7 @@ class ConfigUtil:
         for supplier, keywords in supplier_keywords.items():
             if keyword in keywords and len(keywords) > 1:
                 return "util.suppliers.supplier_" + keywords[1].lower()
-        return None@classmethod
+        return None
 
     @classmethod
     def get_supplier_class_name(cls, keyword: str):
@@ -136,7 +136,7 @@ class ConfigUtil:
         for supplier, keywords in supplier_keywords.items():
             if keyword in keywords and len(keywords) > 1:
                 return keywords[1]
-        return None@classmethod
+        return None
 
     @classmethod
     def get_supplier_tessoract_config(cls, keyword: str):
