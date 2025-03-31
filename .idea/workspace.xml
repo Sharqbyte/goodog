@@ -5,15 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ce7309b-4934-4615-a3fe-02bda9593d86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/goodog.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/extract_text.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/file_management.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/configuration_util.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/pdf_text_extractor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/suppliers/abstract_extractor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/suppliers/supplier_telekom.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/DefaultExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/DefaultExtractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/extract_text.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/extract_text.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/file_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/file_management.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/pdfplumber.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/pdfplumber.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/str_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/str_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/suppliers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/suppliers/base_supplier.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/base_supplier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_Slack.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_Slack.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_datev.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_datev.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_finanzkasse.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_finanzkasse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_microsoft.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_microsoft.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_noodlesoft.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_noodlesoft.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +52,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.fuzzywuzzy_test.executor": "Run",
+    "Python.logging_test.executor": "Run",
+    "Python.logging_text.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -54,7 +68,58 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/util/suppliers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="fuzzywuzzy_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="goodog" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fuzzywuzzy_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="logging_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="goodog" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/logging_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="goodog" />
       <option name="ENV_FILES" value="" />
@@ -81,6 +146,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.fuzzywuzzy_test" />
+        <item itemvalue="Python.logging_test" />
       </list>
     </recent_temporary>
   </component>
@@ -101,7 +168,8 @@
       <option name="presentableId" value="Default" />
       <updated>1742840886855</updated>
       <workItem from="1742840887904" duration="1850000" />
-      <workItem from="1742842753277" duration="36914000" />
+      <workItem from="1742842753277" duration="83706000" />
+      <workItem from="1743089122946" duration="57299000" />
     </task>
     <servers />
   </component>
@@ -120,6 +188,8 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/goodog$main.coverage" NAME="main Coverage Results" MODIFIED="1742929787378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/goodog$logging_text.coverage" NAME="logging_test Coverage Results" MODIFIED="1743091312746" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/goodog$fuzzywuzzy_test.coverage" NAME="fuzzywuzzy_test Coverage Results" MODIFIED="1743094975343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/goodog$main.coverage" NAME="main Coverage Results" MODIFIED="1743405748981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
