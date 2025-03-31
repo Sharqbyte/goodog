@@ -1,13 +1,8 @@
 import re
 from util.suppliers.DefaultExtractor import DefaultExtractor
-import numpy as np
-from datetime import datetime
 from dateutil import parser
 
-import logging
 import cv2
-import pytesseract
-from pdf2image import convert_from_path
 from util.str_util import Utils
 
 class SupplierTelekom(DefaultExtractor):

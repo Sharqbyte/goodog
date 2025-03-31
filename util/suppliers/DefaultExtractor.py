@@ -8,6 +8,7 @@ import pytesseract
 from util.str_util import Utils
 from util.suppliers.abstract_extractor import AbstractExtractor
 from util.pdf_text_extractor import PDFTextExtractor
+from util.configuration_util import ConfigUtil
 
 class DefaultExtractor(AbstractExtractor):
 
@@ -134,7 +135,8 @@ class DefaultExtractor(AbstractExtractor):
         for keyword, supplier_name in supplier_keywords.items():
             if re.search(re.escape(keyword), self.text, re.IGNORECASE):
                 if isinstance(supplier_name, list):
-                    supplier_name = supplier_name[0]  # Assuming the first element is the supplier name
+                    # supplier_name = supplier_name[0]  # Assuming the first element is the supplier name
+                    supplier_name = ConfigUtil.get_supplier_class_name(keyword).lower()
                 return Utils.replace_umlauts(re.sub(r'[ \-]', '_', supplier_name))
 
         supplier_pattern = r"\b(?:[\w\s]+(?:{}))\b".format("|".join(self.config.get("companies_legal_forms", [])))
