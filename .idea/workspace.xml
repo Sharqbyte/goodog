@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ce7309b-4934-4615-a3fe-02bda9593d86" name="Changes" comment="Fix SuppolierNoodlesoft and SupplierFinanzkasse inkluding update PDFExtractorUtil">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/configuration_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/configuration_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/extract_text.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/extract_text.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/file_management.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/file_management.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/pdf_text_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/pdf_text_extractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/str_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/str_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/suppliers/DefaultExtractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/DefaultExtractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/suppliers/abstract_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/abstract_extractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/suppliers/base_supplier.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/base_supplier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_finanzkasse.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_finanzkasse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_noodlesoft.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_noodlesoft.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/suppliers/supplier_slack.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/suppliers/supplier_slack.py" afterDir="false" />
+    <list default="true" id="0ce7309b-4934-4615-a3fe-02bda9593d86" name="Changes" comment="First working version">
+      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +50,7 @@
     "Python.fuzzywuzzy_test.executor": "Run",
     "Python.logging_test.executor": "Run",
     "Python.logging_text.executor": "Run",
-    "Python.main.executor": "Debug",
+    "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
@@ -205,7 +194,7 @@
       <workItem from="1743504947424" duration="54000" />
       <workItem from="1743505008406" duration="2732000" />
       <workItem from="1743512445139" duration="222000" />
-      <workItem from="1743512673940" duration="16486000" />
+      <workItem from="1743512673940" duration="17124000" />
     </task>
     <task id="LOCAL-00001" summary="SupplierTlekeom works">
       <option name="closed" value="true" />
@@ -239,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743435919076</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="First working version">
+      <option name="closed" value="true" />
+      <created>1743580591059</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743580591059</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,7 +258,8 @@
     <MESSAGE value="Extract required libs" />
     <MESSAGE value="SupplierSlack fix" />
     <MESSAGE value="Fix SuppolierNoodlesoft and SupplierFinanzkasse inkluding update PDFExtractorUtil" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix SuppolierNoodlesoft and SupplierFinanzkasse inkluding update PDFExtractorUtil" />
+    <MESSAGE value="First working version" />
+    <option name="LAST_COMMIT_MESSAGE" value="First working version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -282,7 +280,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/goodog$logging_text.coverage" NAME="logging_test Coverage Results" MODIFIED="1743091312746" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/goodog$fuzzywuzzy_test.coverage" NAME="fuzzywuzzy_test Coverage Results" MODIFIED="1743094975343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/goodog$main.coverage" NAME="main Coverage Results" MODIFIED="1743529527423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/goodog$main.coverage" NAME="main Coverage Results" MODIFIED="1743580507831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/goodog$date_util_test.coverage" NAME="date_util_test Coverage Results" MODIFIED="1743430404807" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

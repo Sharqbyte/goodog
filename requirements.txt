@@ -1,6 +1,9 @@
+babel==2.17.0
 certifi==2025.1.31
 cffi==1.17.1
 charset-normalizer==3.4.1
+cloc==0.2.5
+colored==2.3.0
 cryptography==44.0.2
 dateparser==1.2.1
 filelock==3.18.0
@@ -8,6 +11,7 @@ fsspec==2025.3.1
 fuzzywuzzy==0.18.0
 huggingface-hub==0.29.3
 idna==3.10
+langdetect==1.0.9
 numpy==2.2.4
 opencv-python==4.11.0.86
 packaging==24.2
