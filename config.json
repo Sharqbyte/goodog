@@ -70,8 +70,8 @@
         "Eberl Bau und Immo"
     ],
     "supplier_keywords": {
-        "Noodlesoft": ["noodlesoft", "Noodlesoft", "--oem 3 --psm 6 -l deu+eng"],
-        "slack.com": ["slack.com", "Slack", "--oem 3 --psm 6 -l deu+eng"],
+        "Noodlesoft": ["noodlesoft", "Noodlesoft", "--oem 3 --psm 6 -l deu"],
+        "slack.com": ["slack.com", "Slack", "--oem 3 --psm 6 -l deu"],
         "Microsoft": ["microsoft", "Microsoft", "--oem 3 --psm 6 -l deu"],
         "DATEV": ["datev", "Datev", "--oem 3 --psm 6 -l deu"],
         "Finanzkasse": ["Finanzamt_Ebersberg", "Finanzkasse", "--oem 3 --psm 6 -l deu"],

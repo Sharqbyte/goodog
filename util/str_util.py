@@ -4,6 +4,7 @@ import re
 import logging
 from dateutil import parser
 from datetime import datetime
+from fuzzywuzzy import fuzz
 
 class Utils:
     # Define a logger for the Utils class
@@ -49,7 +50,7 @@ class Utils:
         return text.replace(' ', '_')
 
     @staticmethod
-    def parse_date(date_str):
+    def parse_date_old(date_str):
         date_formats = [
             '%d.%m.%Y',
             '%d. %B %Y',
@@ -86,4 +87,56 @@ class Utils:
         if dates:
             latest_date = max(dates)
             return latest_date.date()
+        return None
+
+    @staticmethod
+    def parse_date(raw_date):
+        # Month DE/EN
+        month_to_number = {
+            "Januar": "01", "January": "01",
+            "Februar": "02", "February": "02",
+            "März": "03", "March": "03",
+            "April": "04", "April": "04",
+            "Mai": "05", "May": "05",
+            "Juni": "06", "June": "06",
+            "Juli": "07", "July": "07",
+            "August": "08", "August": "08",
+            "September": "09", "September": "09",
+            "Oktober": "10", "October": "10",
+            "November": "11", "November": "11",
+            "Dezember": "12", "December": "12"
+        }
+
+        # Date formats
+        date_formats = [
+            '%d.%m.%Y',
+            '%d. %B %Y',
+            '%d/%m/%Y',
+            '%Y-%m-%d',
+            '%d %B %Y',
+            '%B %d, %Y',
+            '%Y-%m-%d %H:%M:%S'
+        ]
+        for date_format in date_formats:
+            try:
+                return datetime.strptime(raw_date, date_format)
+            except ValueError:
+                continue
+
+        for month, number in month_to_number.items():
+            # Find the closest month match
+            if fuzz.partial_ratio(month, raw_date) > 80:
+                raw_date = re.sub(r'\b' + re.escape(month) + r'\b', number, raw_date)
+                break
+
+        date_str = re.sub(r'(\d)\.?\s+', r'\1.', raw_date)
+        date_str = re.sub(r'\s+', '.', date_str)
+        date_str = re.sub(r'\.{2,}', '.', date_str)
+
+        try:
+            parsed_date = parser.parse(date_str, dayfirst=True)
+            return parsed_date.strftime("%d.%m.%Y")
+        except:
+            logging.warning(f"Error parsing date: {date_str}")
+
         return None

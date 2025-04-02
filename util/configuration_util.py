@@ -105,7 +105,7 @@ class ConfigUtil:
         return cls.get_config().get("application_path", {}).get("private_correspondence_rename_folder", "")
 
     @classmethod
-    def load_supplier_keywords(cls):
+    def get_supplier_keywords (cls):
         """
         Load supplier keywords from the configuration.
         """
@@ -116,7 +116,7 @@ class ConfigUtil:
         """
         Get supplier keyword from the configuration.
         """
-        supplier_keywords = cls.load_supplier_keywords()
+        supplier_keywords = cls.get_supplier_keywords()
         for supplier, keywords in supplier_keywords.items():
             if keyword in keywords:
                 return supplier
@@ -162,6 +162,13 @@ class ConfigUtil:
         Get companies legal forms from the configuration.
         """
         return cls.get_config().get("companies_legal_forms", [])
+
+    @classmethod
+    def get_exclude_companies(cls):
+        """
+        Load exclude companies from the configuration.
+        """
+        return cls.get_config().get("exclude_companies", [])
 
     @classmethod
     def get_application_paths(cls):

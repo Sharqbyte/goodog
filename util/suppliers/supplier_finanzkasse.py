@@ -20,11 +20,11 @@ class SupplierFinanzkasse(DefaultExtractor):
         self.pdf_path = pdf_path
         self.text = self.pdf_text_extractor.extract_text_from_pdf(pdf_path)
         # Extract data from text
-        data_extract = self.extract_data()
+        invoice, reference, date, invoice_number, recipient = self.extract_data()
         self.config = config
         logging.debug(f"Start data extraction for Finanzamt Ebersberg document")
         print(f"Start data extraction for Finanzamt Ebersberg document")
-        return data_extract
+        return invoice, reference, date, invoice_number, recipient
 
     def is_invoice(self):
         if re.search(r"Rechnung|Invoice|Billing", self.text, re.IGNORECASE):
@@ -145,7 +145,6 @@ class SupplierFinanzkasse(DefaultExtractor):
         reference = None
         date = None
         invoice_number = None
-        supplier = None
         recipient = None
 
         if self.text:
@@ -154,8 +153,7 @@ class SupplierFinanzkasse(DefaultExtractor):
             reference = self.extract_reference()
             date = self.find_first_date()
             invoice_number = self.extract_invoice_number()
-            supplier = self.extract_supplier()
             recipient = self.extract_recipient()
 
-        logging.info(f"Extracted data: reference={reference}, date={date}, invoice_number={invoice_number}, supplier={supplier}, recipient={recipient}")
-        return invoice, reference, date, invoice_number, supplier, recipient
+        logging.info(f"Extracted data: reference={reference}, date={date}, invoice_number={invoice_number}, recipient={recipient}")
+        return invoice, reference, date, invoice_number, recipient

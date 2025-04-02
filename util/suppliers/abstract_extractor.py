@@ -24,7 +24,3 @@ class AbstractExtractor(ABC):
     @abstractmethod
     def extract_date(self):
         pass
-
-    @abstractmethod
-    def extract_supplier(self):
-        pass

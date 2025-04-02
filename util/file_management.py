@@ -17,7 +17,7 @@ class FileManagement:
         logging.info(f"Scan source folder")
         # Load pdf files from scan folder
         for filename in os.listdir(ConfigUtil.get_posteingang_folder()):
-            data_extractor = DataExtractorUtil(ConfigUtil.get_config(), r'--oem 3 --psm 6 -l deu+eng')
+            data_extractor = DataExtractorUtil(ConfigUtil.get_config(), r'--oem 3 --psm 3 -l deu')
 
             if filename.endswith(".pdf"):
                 pdf_path = os.path.join(ConfigUtil.get_posteingang_folder(), filename)
@@ -30,7 +30,7 @@ class FileManagement:
 
                 try:
                     # Extract text from PDF
-                    invoice, reference, date, invoice_number, supplier, recipient = data_extractor.extract_text(pdf_path)
+                    supplier, invoice, reference, date, invoice_number, recipient = data_extractor.extract_text(pdf_path)
 
                     # Rename and move file
                     self.rename_and_move_file(pdf_path, invoice, reference, date, invoice_number, supplier, recipient)
@@ -63,7 +63,7 @@ class FileManagement:
 
         if invoice:
             new_filename = f"{formatted_date}_{invoice_number or 'Unknown'}_{supplier or 'Unknown'}.pdf"
-            if not date or not invoice_number:
+            if not date or date == "Unknown" or not invoice_number or invoice_number == "Unknown":
                 overwrite_file = False
                 if recipient == "Medmind":
                     archive_folder = ConfigUtil.get_medmind_invoice_rename_folder()

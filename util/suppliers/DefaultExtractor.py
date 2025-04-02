@@ -9,6 +9,7 @@ from util.str_util import Utils
 from util.suppliers.abstract_extractor import AbstractExtractor
 from util.pdf_text_extractor import PDFTextExtractor
 from util.configuration_util import ConfigUtil
+from fuzzywuzzy import fuzz
 
 class DefaultExtractor(AbstractExtractor):
 
@@ -26,8 +27,9 @@ class DefaultExtractor(AbstractExtractor):
         self.pdf_path = pdf_path
         self.config = config
         self.text = self.pdf_text_extractor.extract_text_from_pdf(pdf_path)
-        invoice, reference, date, invoice_number, supplier, recipient = self.extract_invoice_info()
-        return invoice, reference, date, invoice_number, supplier, recipient
+        self.text = self.pdf_text_extractor.extract_text_by_lang(pdf_path, self.pdf_text_extractor, self.text)
+        invoice, reference, date, invoice_number, recipient = self.extract_invoice_info()
+        return invoice, reference, date, invoice_number, recipient
 
     def extract_invoice_info(self):
         invoice = False
@@ -53,9 +55,9 @@ class DefaultExtractor(AbstractExtractor):
         date = self.extract_date()
 
         # Extract supplier
-        supplier = self.extract_supplier()
+        # supplier = self.extract_supplier()
 
-        return invoice, reference, date, invoice_number, supplier, recipient
+        return invoice, reference, date, invoice_number, recipient
 
     def is_invoice(self):
         if re.search(r"Rechnung|Invoice|Billing", self.text, re.IGNORECASE):
@@ -94,6 +96,7 @@ class DefaultExtractor(AbstractExtractor):
         return None
 
     def extract_date(self):
+        date = None
         date_patterns = [
             re.compile(r'\s*Rechnungsdatum\s*:?\s*' + self.date_format_regexp, re.IGNORECASE),
             re.compile(r'\s*Leistungsdatum\s*:?\s*' + self.date_format_regexp, re.IGNORECASE),
@@ -110,28 +113,15 @@ class DefaultExtractor(AbstractExtractor):
         for pattern in date_patterns:
             date_match = pattern.search(self.text)
             if date_match:
-                date = date_match.group(1)
-                logging.debug(f"Date found: {date}")
-                break
-        else:
-            try:
-                date = str(parser.parse(self.text, fuzzy_with_tokens=True)[0].date())
-                logging.debug(f"Date parsed: {date}")
-            except:
-                date = 'Unbekannt'
-                logging.warning("Date not found")
+                raw_date = date_match.group(1)
+                logging.debug(f"Raw date found: {raw_date}")
+                date = Utils.parse_date(raw_date)
 
-        for pattern in date_patterns:
-            date_match = pattern.search(self.text)
-            if date_match:
-                return date_match.group(1)
-        try:
-            return str(parser.parse(self.text, fuzzy_with_tokens=True)[0].date())
-        except:
-            return 'Unbekannt'
+        return date
 
     def extract_supplier(self):
         supplier_keywords = self.config.get("supplier_keywords", {})
+        # Known suppliers match defined in config.json
         for keyword, supplier_name in supplier_keywords.items():
             if re.search(re.escape(keyword), self.text, re.IGNORECASE):
                 if isinstance(supplier_name, list):
@@ -139,11 +129,14 @@ class DefaultExtractor(AbstractExtractor):
                     supplier_name = ConfigUtil.get_supplier_class_name(keyword).lower()
                 return Utils.replace_umlauts(re.sub(r'[ \-]', '_', supplier_name))
 
-        supplier_pattern = r"\b(?:[\w\s]+(?:{}))\b".format("|".join(self.config.get("companies_legal_forms", [])))
+        # Identified suppliers by legal forms
+        supplier_pattern = r"\b(?:[\w\s]+(?:{}))\b".format("|".join(ConfigUtil.get_companies_legal_forms()))
         supplier_match = re.search(supplier_pattern, self.text, re.IGNORECASE)
+
         if supplier_match:
             potential_supplier = supplier_match.group(0)
-            excluded_companies = self.config.get("excluded_companies", [])
+            excluded_companies = ConfigUtil.get_exclude_companies()
             if potential_supplier not in excluded_companies:
                 return Utils.replace_umlauts(re.sub(r'[ \-]', '_', potential_supplier))
+
         return None

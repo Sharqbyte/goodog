@@ -16,8 +16,8 @@ class SupplierNoodlesoft(DefaultExtractor):
         self.pdf_path = pdf_path
         self.config = config
         self.text = self.pdf_text_extractor.extract_text_from_pdf(pdf_path)
-        invoice, reference, date, invoice_number, supplier, recipient = super().extract_invoice_info()
-        return invoice, reference, date, invoice_number, supplier, recipient
+        invoice, reference, date, invoice_number, recipient = super().extract_invoice_info()
+        return invoice, reference, date, invoice_number, recipient
 
     def extract_date(self):
         # Kombinierte Suche für beide Datumsformate

@@ -4,10 +4,15 @@ import pytesseract
 from pdf2image import convert_from_path
 import cv2
 import os
+from langdetect import detect
+import logging
 
 class PDFTextExtractor:
+    # Define a logger for the Utils class
+    logger = logging.getLogger(__name__)
+
     def __init__(self, tesseract_config):
-        self.set_tesseract_config(tesseract_config)
+        self.tesseract_config = tesseract_config
         # Set the TESSDATA_PREFIX environment variable
         os.environ['TESSDATA_PREFIX'] = '/usr/local/share/tessdata/'
 
@@ -77,6 +82,10 @@ class PDFTextExtractor:
             # gray = image[:,:,2]  # Oft besserer Kontrast im Rotkanal
         else:
             gray = image
+
+        # Skalierung mit bilinearer Interpolation
+        gray = cv2.resize(gray, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_LINEAR)
+
         # Apply thresholding
         _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
         # Remove noise
@@ -138,4 +147,23 @@ class PDFTextExtractor:
             # open_cv_image = np.array(image)
             # Extract text from image
             text += self.extract_text_from_image(image)
+        return text
+
+    def extract_text_by_lang(self, pdf_path, pdf_text_extractor, text):
+        # Detect the language of the extracted text
+        try:
+            # Erkennen Sie die Sprache des extrahierten Textes
+            language = detect(text)
+
+            if language == 'de':
+                return text
+            elif language == 'en':
+                pdf_text_extractor.set_tesseract_config(self.tesseract_config.replace('deu', 'eng'))
+                return pdf_text_extractor.extract_text_from_pdf(pdf_path)
+            else:
+                pdf_text_extractor.set_tesseract_config(self.tesseract_config.replace('deu', 'deu+eng'))
+                return pdf_text_extractor.extract_text_from_pdf(pdf_path)
+        except Exception as e:
+            logging.error(f"Fehler bei der Spracherkennung: {e}")
+            lang = "unknown"
         return text

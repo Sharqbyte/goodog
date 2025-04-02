@@ -16,11 +16,16 @@ class DataExtractorUtil:
     def __init__(self, config, tessoract_config):
         self.config = config
         self.pdf_text_extractor = PDFTextExtractor(tessoract_config)
-        self.companies_legal_forms = config.get("companies_legal_forms", [])
-        self.excluded_companies = config.get("exclude_companies", [])
+        self.companies_legal_forms = ConfigUtil.get_companies_legal_forms()
+        self.excluded_companies = ConfigUtil.get_exclude_companies()
 
     def get_supplier_class(self, supplier_name):
         logging.debug(f"Supplier name: {supplier_name}")
+        supplier_keywords = ConfigUtil.get_supplier_keywords()
+        if supplier_name not in supplier_keywords:
+            logging.warning(f"Supplier name '{supplier_name}' not found in supplier_keywords. Using DefaultExtractor.")
+            return DefaultExtractor(self.config, ConfigUtil.get_supplier_tessoract_config(supplier_name))
+
         module_name = ConfigUtil.get_supplier_module_name(supplier_name)
         try:
             module = importlib.import_module(module_name)
@@ -40,7 +45,7 @@ class DataExtractorUtil:
             text = self.extract_text_from_pdf_AI(pdf_path)
 
         # Identify supplier
-        supplier = self.extract_supplier(text)
+        supplier = self.extract_supplier(pdf_path, text)
 
         # Get supplier class
         print(f"Supplier:  {supplier}")
@@ -48,12 +53,12 @@ class DataExtractorUtil:
         supplier_class = self.get_supplier_class(supplier)
 
         # Extract additional data using the supplier class
-        additional_data = supplier_class.parse_pdf(self.config, pdf_path)
+        invoice, reference, date, invoice_number, recipient = supplier_class.parse_pdf(self.config, pdf_path)
 
         logging.debug(f"Extracted text: {text}")
-        print(f"Extracted text: {text}")
+        print(f"PRINT : Extracted text: {text}")
 
-        return additional_data
+        return supplier, invoice, reference, date, invoice_number, recipient
 
     def extract_text_from_pdf_PyPDF2(self, pdf_path):
         text = ""
@@ -78,13 +83,15 @@ class DataExtractorUtil:
         return text
 
     # Extract supplier from text using keywords and legal forms
-    def extract_supplier(self, text):
+    def extract_supplier(self, pdf_path, text):
         # First, search for the keys in supplier_keywords
-        supplier_keywords = self.config.get("supplier_keywords", {})
+        supplier_keywords = ConfigUtil.get_supplier_keywords()
         for supplier, keywords in supplier_keywords.items():
             for keyword in keywords:
                 if re.search(rf"\b{re.escape(keyword)}\b", text, re.IGNORECASE):
                     return supplier
+
+        self.pdf_text_extractor.extract_text_by_lang(pdf_path, self.pdf_text_extractor, text)
 
         # If no match is found, fall back to the original method
         supplier_pattern = r"\b(?:[\w\s]+(?:{}))\b".format("|".join(self.companies_legal_forms))

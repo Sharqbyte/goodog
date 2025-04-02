@@ -16,9 +16,6 @@ class BaseSupplier:
     def extract_recipient(self):
         raise NotImplementedError
 
-    def extract_supplier(self):
-        raise NotImplementedError
-
     def extract_data(self):
         raise NotImplementedError
 
