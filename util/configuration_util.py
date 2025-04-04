@@ -123,6 +123,14 @@ class ConfigUtil:
         return None
 
     @classmethod
+    def get_supplier_name(cls, supplier_keyword: str):
+        supplier_keywords = cls.get_config().get("supplier_keywords", {})
+        for keywords in supplier_keywords.values():
+            if supplier_keyword in keywords:
+                return keywords[1]
+        return None
+
+    @classmethod
     def get_supplier_module_name(cls, keyword: str):
         supplier_keywords = cls.get_config().get("supplier_keywords", {})
         for supplier, keywords in supplier_keywords.items():

@@ -93,18 +93,18 @@ class Utils:
     def parse_date(raw_date):
         # Month DE/EN
         month_to_number = {
-            "Januar": "01", "January": "01",
-            "Februar": "02", "February": "02",
-            "März": "03", "March": "03",
-            "April": "04", "April": "04",
-            "Mai": "05", "May": "05",
-            "Juni": "06", "June": "06",
-            "Juli": "07", "July": "07",
-            "August": "08", "August": "08",
-            "September": "09", "September": "09",
-            "Oktober": "10", "October": "10",
-            "November": "11", "November": "11",
-            "Dezember": "12", "December": "12"
+            "Januar": "01", "January": "01", "JAN": "01",
+            "Februar": "02", "February": "02", "FEB": "02",
+            "März": "03", "March": "03", "MÄR": "03",
+            "April": "04", "April": "04", "APR": "04",
+            "Mai": "05", "May": "05", "MAI": "05",
+            "Juni": "06", "June": "06", "JUN": "06",
+            "Juli": "07", "July": "07", "JUL": "07",
+            "August": "08", "August": "08", "AUG": "08",
+            "September": "09", "September": "09", "SEP": "09",
+            "Oktober": "10", "October": "10", "OKT": "10",
+            "November": "11", "November": "11", "NOV": "11",
+            "Dezember": "12", "December": "12", "DEZ": "12"
         }
 
         # Date formats
@@ -115,7 +115,8 @@ class Utils:
             '%Y-%m-%d',
             '%d %B %Y',
             '%B %d, %Y',
-            '%Y-%m-%d %H:%M:%S'
+            '%Y-%m-%d %H:%M:%S',
+            '%d-%b-%Y'
         ]
         for date_format in date_formats:
             try:

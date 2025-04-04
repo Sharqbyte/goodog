@@ -19,7 +19,25 @@ class DataExtractorUtil:
         self.companies_legal_forms = ConfigUtil.get_companies_legal_forms()
         self.excluded_companies = ConfigUtil.get_exclude_companies()
 
-    def get_supplier_class(self, supplier_name):
+    def get_supplier_class(self, supplier_keyword):
+        logging.debug(f"Supplier keyword: {supplier_keyword}")
+        supplier_keywords = ConfigUtil.get_supplier_keywords()
+        for supplier_name, supplier_info in supplier_keywords.items():
+            if supplier_keyword == supplier_info[1]:
+                module_name = "util.suppliers.supplier_" + supplier_info[1].lower()
+                class_name = supplier_info[1]
+                tesseract_config = supplier_info[2]
+                try:
+                    module = importlib.import_module(module_name)
+                    supplier_class = getattr(module, 'Supplier' + ConfigUtil.get_supplier_class_name(supplier_name))
+                    return supplier_class(self.config, tesseract_config)
+                except ModuleNotFoundError:
+                    logging.error(f"No module named '{module_name}'")
+                    return DefaultExtractor(self.config, tesseract_config)
+        logging.warning(f"Supplier keyword '{supplier_keyword}' not found in supplier_keywords. Using DefaultExtractor.")
+        return DefaultExtractor(self.config, ConfigUtil.get_supplier_tessoract_config(supplier_keyword))
+
+    def get_supplier_class_old(self, supplier_name):
         logging.debug(f"Supplier name: {supplier_name}")
         supplier_keywords = ConfigUtil.get_supplier_keywords()
         if supplier_name not in supplier_keywords:
@@ -89,7 +107,7 @@ class DataExtractorUtil:
         for supplier, keywords in supplier_keywords.items():
             for keyword in keywords:
                 if re.search(rf"\b{re.escape(keyword)}\b", text, re.IGNORECASE):
-                    return supplier
+                    return ConfigUtil.get_supplier_name(supplier)
 
         self.pdf_text_extractor.extract_text_by_lang(pdf_path, self.pdf_text_extractor, text)
 

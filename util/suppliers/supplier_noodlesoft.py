@@ -9,7 +9,7 @@ from util.str_util import Utils
 class SupplierNoodlesoft(DefaultExtractor):
     def __init__(self, config, tessoract_config):
         super().__init__(config, tessoract_config)
-        self.pdf_text_extractor.set_tesseract_config(r'--oem 3 --psm 3 -l deu')
+        self.pdf_text_extractor.set_tesseract_config(r'--oem 3 --psm 3 -l eng')
 
     def parse_pdf(self, config, pdf_path):
         # Extract data from text
@@ -52,11 +52,11 @@ class SupplierNoodlesoft(DefaultExtractor):
     def extract_invoice_number(self):
         # Direkte Extraktion des alphanumerischen Codes
         match = re.search(
-            r'Order\s*Number:[\s\-]*([A-Z0-9]{10,15})',
+            r'Order\s*Number:\s*[\r\n\s]*Receipt\s*([\r\n\s]*)([A-Z0-9]{10,15})',
             self.text,
             re.IGNORECASE
         )
-        return match.group(1) if match else None
+        return match.group(2) if match else None
 
     def preprocess_image(self, image):
         # Optimierte Vorverarbeitung für Noodlesoft-Scans
